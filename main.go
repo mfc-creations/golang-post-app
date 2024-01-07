@@ -2,7 +2,11 @@ package main
 
 import (
 	"errors"
+	"fmt"
+	"mfc-creations/post-app/database"
 	"net/http"
+
+	"mfc-creations/post-app/config"
 
 	"github.com/gin-gonic/gin"
 )
@@ -87,6 +91,11 @@ func getPost(context *gin.Context){
 	context.IndentedJSON(http.StatusOK,currentPost)
 }
 
+func init(){
+	config.LoadEnv()
+	db:=database.Connect()
+	fmt.Println(db)
+}
 
 func main(){
 	router:=gin.Default()
