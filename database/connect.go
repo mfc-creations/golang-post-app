@@ -9,12 +9,15 @@ import (
 	"gorm.io/gorm"
 )
 
-func Connect() *gorm.DB{
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s",os.Getenv("DB_URL"),os.Getenv("DB_USER"),os.Getenv("DB_PASSWORD"),os.Getenv("DB_NAME"),os.Getenv("DB_PORT")) 
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+var DB *gorm.DB
 
-	if err!=nil {
+func Connect() *gorm.DB {
+	var err error
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s", os.Getenv("DB_URL"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"), os.Getenv("DB_PORT"))
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	if err != nil {
 		log.Fatal("Failed to connect Database")
 	}
-	return db
+	return DB
 }
